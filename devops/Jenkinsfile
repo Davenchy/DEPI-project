@@ -10,13 +10,16 @@ def report(msg) {
 pipeline {
   agent any
 
+  stages {
 
-  stage('Default') {
-    steps {
-      echo "hello, world"
-      sh 'docker --version'
-      sh 'bun --version'
+    stage('Default') {
+      steps {
+        echo "hello, world"
+        sh 'docker --version'
+        sh 'bun --version'
+      }
     }
+
   }
 }
 
