@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local DevOps volumes
+devops/gitlab/
+devops/jenkins_home/
+devops/gogs/
