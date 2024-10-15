@@ -10,6 +10,22 @@ def report(msg) {
 pipeline {
   agent any
 
+
+  stage('Default') {
+    steps {
+      echo "hello, world"
+      sh 'docker --version'
+      sh 'bun --version'
+    }
+  }
+}
+
+/*
+  environment {
+    DOCKERHUB = credentials('DockerHub')
+    DEPLOY_SERVER_SSH_PRIVATE_KEY = credentials('DeployServerSSHPrivateKey')
+  }
+
   parameters {
     string(name: 'ImageTag', defaultValue: 'davenchy/depi-project:latest', description: 'The docker image tag')
     booleanParam(name: 'RunTests', defaultValue: true, description: 'Whether to run tests. If false, only build the image.')
@@ -97,4 +113,6 @@ pipeline {
       reportColored "Failed in ${currentBuild.durationString}", 'danger'
     }
   }
+
 }
+*/
