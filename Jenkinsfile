@@ -1,0 +1,100 @@
+def reportColored(msg, color) {
+  slackSend message: "<${BUILD_URL}|${currentBuild.fullDisplayName}> | " + msg,
+            color: color
+}
+
+def report(msg) {
+  slackSend message: "<${BUILD_URL}|${currentBuild.fullDisplayName}> | " + msg
+}
+
+pipeline {
+  agent any
+
+  parameters {
+    string(name: 'ImageTag', defaultValue: 'davenchy/depi-project:latest', description: 'The docker image tag')
+    booleanParam(name: 'RunTests', defaultValue: true, description: 'Whether to run tests. If false, only build the image.')
+  }
+
+  stages {
+    stage('init') {
+      steps {
+        report "Started"
+      }
+    }
+
+    stage('install deps') {
+      agent {
+        docker {
+          image 'oven/bun:alpine'
+          reuseNode true
+        }
+      }
+
+      steps {
+        report "Installing dependencies"
+        echo 'installing deps'
+        sh 'bun install'
+      }
+    }
+
+    stage('tests') {
+      when {
+        expression { params.RunTests }
+      }
+
+      agent {
+        docker {
+          image 'oven/bun:alpine'
+          reuseNode true
+        }
+      }
+
+      steps {
+        report "Running tests"
+        sh 'bun test'
+      }
+    }
+
+    stage('build') {
+      agent {
+        docker {
+          image 'oven/bun:alpine'
+          reuseNode true
+        }
+      }
+      steps {
+        report "Building"
+        sh 'bun run build'
+      }
+    }
+
+    stage('build and push image') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+          report "Building image: ${params.ImageTag}"
+          sh "docker build -t ${params.ImageTag} ."
+          sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+          report "Pushing image"
+          sh "docker push ${params.ImageTag}"
+        }
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        report "Deploying"
+        ansiblePlaybook colorized: true, credentialsId: 'DeployServerSSHPrivateKey', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'Ansible.yml', vaultTmpPath: ''
+      }
+    }
+  }
+
+  post {
+    success {
+      reportColored "Succeeded in ${currentBuild.durationString}", 'good'
+    }
+
+    failure {
+      reportColored "Failed in ${currentBuild.durationString}", 'danger'
+    }
+  }
+}
