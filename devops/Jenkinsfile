@@ -83,7 +83,7 @@ pipeline {
     stage('Deploy') {
       steps {
         report "Deploying"
-        ansiblePlaybook colorized: true, credentialsId: 'DeployServerSSHPrivateKey', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'devops/ansible/hosts', playbook: 'devops/ansbile/Ansible.yml', vaultTmpPath: ''
+        ansiblePlaybook colorized: true, credentialsId: 'DeployServerSSHPrivateKey', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'devops/ansible/hosts', playbook: 'devops/ansible/Ansible.yml', vaultTmpPath: ''
       }
     }
   }
