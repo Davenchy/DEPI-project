@@ -72,7 +72,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           report "Building image: ${params.ImageTag}"
-          sh "docker buildx build -t ${params.ImageTag} ."
+          sh "docker buildx build -t ${params.ImageTag} -f devops/deploy_dockerfile ."
           sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
           report "Pushing image"
           sh "docker push ${params.ImageTag}"
