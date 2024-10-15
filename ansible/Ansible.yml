@@ -1,0 +1,68 @@
+- name: Install and configure docker
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 3600
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: latest
+
+- name: Configure Firewall
+  hosts: all
+  become: true
+  tasks:
+    - name: Enable UFW and deny any incomming traffic
+      ufw:
+        state: enabled
+        default: deny
+        logging: 'on'
+
+    - name: Add UFW rule to allow limited SSH connections
+      ufw:
+        rule: limit
+        port: ssh
+        proto: tcp
+        comment: "Allow limited SSH connections to prevent brute force attacks"
+
+    - name: Add UFW rule to allow port 80
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp
+        comment: "Allow port 80"
+
+    - name: Validate UFW rules
+      shell: ufw status
+      register: ufw_status
+    - debug: msg={{ ufw_status.stdout_lines }}
+
+- name: Deploy web app
+  hosts: all
+  become: true
+  tasks:
+    - name: Run the web app container
+      docker_container:
+        name: webapp
+        image: davenchy/depi-project:latest
+        published_ports:
+          - 80:80
+        pull: true
+        detach: true
+        restart_policy: always
+        state: started
+
+    - name: List containers
+      shell: docker ps
+      register: docker_ps
+    - debug: msg={{ docker_ps.stdout_lines }}
+
+    - name: Validate the deployment
+      shell: curl -I 127.0.0.1
+      register: curl
+    - debug: msg={{ curl.stdout_lines }}
