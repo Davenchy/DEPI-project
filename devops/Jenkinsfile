@@ -20,6 +20,7 @@ pipeline {
         echo "hello, world"
         sh 'docker --version'
         echo "${BUN}"
+        sh 'bun --version'
       }
     }
   }
