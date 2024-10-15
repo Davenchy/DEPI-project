@@ -10,23 +10,6 @@ def report(msg) {
 pipeline {
   agent any
 
-  stages {
-    stage('Default') {
-      steps {
-        echo "hello, world"
-        sh 'docker --version'
-        sh 'bun --version'
-      }
-    }
-  }
-}
-
-/*
-  environment {
-    DOCKERHUB = credentials('DockerHub')
-    DEPLOY_SERVER_SSH_PRIVATE_KEY = credentials('DeployServerSSHPrivateKey')
-  }
-
   parameters {
     string(name: 'ImageTag', defaultValue: 'davenchy/depi-project:latest', description: 'The docker image tag')
     booleanParam(name: 'RunTests', defaultValue: true, description: 'Whether to run tests. If false, only build the image.')
@@ -100,7 +83,7 @@ pipeline {
     stage('Deploy') {
       steps {
         report "Deploying"
-        ansiblePlaybook colorized: true, credentialsId: 'DeployServerSSHPrivateKey', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'Ansible.yml', vaultTmpPath: ''
+        ansiblePlaybook colorized: true, credentialsId: 'DeployServerSSHPrivateKey', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'devops/hosts', playbook: 'devops/Ansible.yml', vaultTmpPath: ''
       }
     }
   }
@@ -114,6 +97,4 @@ pipeline {
       reportColored "Failed in ${currentBuild.durationString}", 'danger'
     }
   }
-
 }
-*/
