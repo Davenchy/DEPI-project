@@ -10,8 +10,8 @@ def report(msg) {
 pipeline {
   agent any
 
-  tools {
-    tool name: 'Bun', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+  environment {
+    BUN = tool name: 'Bun', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
   }
 
   stages {
@@ -19,7 +19,7 @@ pipeline {
       steps {
         echo "hello, world"
         sh 'docker --version'
-        sh 'bun --version'
+        echo "${BUN}"
       }
     }
   }
