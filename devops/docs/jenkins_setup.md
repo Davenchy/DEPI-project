@@ -2,6 +2,8 @@
 
 After starting the Jenkins server using Docker Compose, follow these steps to set up the Jenkins pipeline:
 
+For more information about the [Jenkinsfile](jenkinsfile.md).
+
 ## Credentials
 
 The `Jenkinsfile` requires specific credentials to be set up.

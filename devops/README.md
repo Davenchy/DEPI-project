@@ -30,7 +30,7 @@ docker compose --build up
 
 This will build the Jenkins and Gogs containers from `jenkins_dockerfile` and `gogs_dockerfile`, and start them.
 
-Once the services are running, set up the Jenkins pipeline and credentials following the [Jenkins Setup](jenkins_setup.md). Then configure your Gogs repository and push your code to it following the [Gogs Setup](gogs_setup.md).
+Once the services are running, set up the Jenkins pipeline and credentials following the [Jenkins Setup](docs/jenkins_setup.md). Then configure your Gogs repository and push your code to it following the [Gogs Setup](docs/gogs_setup.md).
 
 ## Jenkins Container
 
@@ -81,7 +81,7 @@ The playbook performs the following actions on the deployment server:
 
 ## Jenkinsfile
 
-This is the Jenkins pipeline file. For more information, refer to the [Jenkinsfile](jenkinsfile.md).
+This is the Jenkins pipeline file. For more information, refer to the [Jenkinsfile](docs/jenkinsfile.md).
 
 ## Deployment Dockerfile
 
