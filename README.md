@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+# DevOps Pipeline DEPI Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an automated CI/CD pipeline designed to streamline the development, testing, and deployment process. It integrates Gogs, Jenkins, Ansible, and Docker for source code management, continuous integration, and automated deployment. With each push to the repository, a Jenkins pipeline is triggered to run tests, build Docker images, and deploy the application to a production server. Ansible is used for server configuration and deployment automation, while Slack notifications provide real-time pipeline status updates.
 
-Currently, two official plugins are available:
+The application itself is based on a default Vite + React + TypeScript template, generated using `bun create vite my-app --template react-swc-ts`. A `tests/` directory with a basic passing test case has been added to demonstrate the testing stage.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+All DevOps-related code is located in the `devops/` directory. For more details, see the [DevOps Docs](devops/README.md).
 
-## Expanding the ESLint configuration
+This project was developed as part of a team graduation project in the [Digital Egypt Pioneers Initiative - DEPI](https://depi.gov.eg/) DevOps track.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## Resources
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+**Docker Image:** `davenchy/depi-project:latest`
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+More resources will be added later.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Tools
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **Jenkins**: Automates the CI/CD pipeline.
+- **Ansible**: Automates server configuration and deployment.
+- **Gogs**: Source Code Management (SCM) tool.
+  > Why Gogs? It’s lightweight, easy to use, and handles both source code management and webhook-based pipeline triggers.
+  > GitLab CE was considered but was too resource-heavy for a local machine with modest capabilities.
+- **Bun**: A TypeScript runtime used for package management (instead of npm), testing, and building/bundling.
+- **Docker**: The backbone of the infrastructure, used to containerize all services.
+
+## Jenkins Plugins
+
+- **docker-workflow**: Enables Docker integration in the pipeline to run Bun and build deployment images.
+- **ansible**: Enables the use of Ansible within the pipeline.
+- **gogs-webhook**: Triggers the Jenkins pipeline on Gogs webhook requests.
+- **slack**: Sends notifications to Slack for pipeline updates.
