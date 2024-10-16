@@ -1,0 +1,24 @@
+services:
+  jenkins:
+    container_name: jenkins
+    image: davenchy/depi-project-jenkins:latest
+    build:
+      context: .
+      dockerfile: jenkins_dockerfile
+    restart: on-failure
+    ports:
+      - 8080:8080
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+  gogs:
+    container_name: gogs
+    image: davenchy/gogs
+    build:
+      context: .
+      dockerfile: gogs_dockerfile
+    restart: on-failure
+    ports:
+      - 3000:3000
+      - 3022:22
+    volumes:
+      - ./gogs:/data
