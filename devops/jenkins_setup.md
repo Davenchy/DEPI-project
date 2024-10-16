@@ -67,3 +67,32 @@ To configure Slack notifications:
    - Check `Custom Slack app bot user`.
 
 For more information on credentials and access tokens, check the [Slack Notifications Jenkins plugin](https://github.com/jenkinsci/slack-plugin) documentation under the **Create your app** section.
+
+## The Pipeline
+
+After setting up everything, follow these steps to create the pipeline:
+
+1. From the `Dashboard`, add a new job.
+2. Name it, for example, `depi-project`.
+3. Select `Pipeline` as the job type.
+
+Under the **Gogs Webhook** section:
+
+- Check the **Use Gogs secret** checkbox and enter your webhook secret.
+- Check the **Branch Filter** checkbox and specify the branch (e.g., `main`) that should trigger the pipeline.
+
+Under the **Build Triggers** section:
+
+- Check the `Build when a change is pushed to Gogs` checkbox.
+
+Under the **Pipeline** section:
+
+- Set **Definition** to `Pipeline script from SCM`.
+- Select `Git` under **SCM**.
+
+Then:
+
+- Enter your Gogs repository URL (e.g., `http://gogs:3000/davenchy/depi-project.git`).
+- Set credentials if the repository is private.
+- Under **Branches to build**, specify `*/main` or the branch you want to build.
+- Set **Script Path** to `devops/Jenkinsfile`, as the `Jenkinsfile` is located in the `devops/` directory.
