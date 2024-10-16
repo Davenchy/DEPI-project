@@ -12,9 +12,9 @@ This project was developed as part of a team graduation project in the [Digital 
 
 ## Resources
 
-**Docker Image:** `davenchy/depi-project:latest`
-
-More resources will be added later.
+- **Docker Image:** `davenchy/depi-project:latest`
+- **Slides:** Will be added soon.
+- **Infrastructure Representation Image:** Will be added soon.
 
 ## Tools
 
