@@ -1,0 +1,5 @@
+FROM gogs/gogs
+
+COPY ./gogs-config.ini /data/gogs/gogs/conf/app.ini
+
+EXPOSE 3000 22
