@@ -1,5 +1,9 @@
 FROM gogs/gogs
 
-COPY ./gogs-config.ini /data/gogs/gogs/conf/app.ini
+COPY ./gogs-config.ini /app.ini
+COPY scripts/gogs_entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 3000 22
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
