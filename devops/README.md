@@ -54,7 +54,7 @@ Additionally, these packages are installed:
 - **docker-cli-buildx**: The Buildx plugin for Docker.
 - **ansible**: To be used in the pipeline.
 
-Finally, the `jenkins_entrypoint.sh` script is copied to the container. This script creates a Docker group with the same GID as the host and adds the Jenkins user to that group. It then starts the Jenkins entrypoint script.
+Finally, the `scripts/jenkins_entrypoint.sh` script is copied to the container. This script creates a Docker group with the same GID as the host and adds the Jenkins user to that group. It then starts the Jenkins entrypoint script.
 
 ## Gogs Container
 
@@ -70,6 +70,8 @@ The `gogs-config.ini` file is copied to configure the Gogs server. Key settings 
 - Captcha protection disabled.
 - The `jenkins` host added to the `LOCAL_NETWORK_ALLOWLIST`.
 - The main config screen is disabled for the first run.
+
+Also, the `scripts/gogs_entrypoint.sh` script is copied to the container. This script will set up the Gogs server with the `gogs-config.ini` on the first run.
 
 ## Ansible
 
