@@ -38,10 +38,10 @@ The Docker Compose file builds the container from `jenkins_dockerfile`, which is
 
 The following Jenkins plugins are installed:
 
-- **docker-workflow**: To use Docker in the pipeline as an agent to run the Bun binary.
-- **ansible**: To use Ansible in the pipeline.
-- **gogs-webhook**: To trigger the Jenkins pipeline on Gogs webhook requests.
-- **slack**: To send notifications to Slack.
+- **docker-workflow**: Enables Docker integration in the pipeline to run Bun and build deployment images.
+- **ansible**: Enables the use of Ansible within the pipeline.
+- **gogs-webhook**: Triggers the Jenkins pipeline on Gogs webhook requests.
+- **slack**: Sends notifications to Slack for pipeline updates.
 
 Additionally, these packages are installed:
 
