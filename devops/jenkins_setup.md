@@ -78,7 +78,7 @@ After setting up everything, follow these steps to create the pipeline:
 
 Under the **Gogs Webhook** section:
 
-- Check the **Use Gogs secret** checkbox and enter your webhook secret.
+- Check the **Use Gogs secret** checkbox and enter your webhook secret (e.g., `my_webhook_secret`).
 - Check the **Branch Filter** checkbox and specify the branch (e.g., `main`) that should trigger the pipeline.
 
 Under the **Build Triggers** section:
