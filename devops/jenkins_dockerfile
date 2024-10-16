@@ -10,7 +10,7 @@ USER root
 
 RUN apk add --no-cache docker-cli docker-cli-buildx ansible
 
-COPY jenkins_entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY scripts/jenkins_entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chown root:jenkins /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
