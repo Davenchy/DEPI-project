@@ -32,6 +32,11 @@ This will build the Jenkins and Gogs containers from `jenkins_dockerfile` and `g
 
 Once the services are running, set up the Jenkins pipeline and credentials following the [Jenkins Setup](docs/jenkins_setup.md). Then configure your Gogs repository and push your code to it following the [Gogs Setup](docs/gogs_setup.md).
 
+## Ports
+
+- **Jenkins Server:** 8080
+- **Gogs:** http: 3000, ssh: 8022
+
 ## Jenkins Container
 
 The Docker Compose file builds the container from `jenkins_dockerfile`, which is based on the `jenkins/jenkins:alpine` image.
