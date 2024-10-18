@@ -1,6 +1,6 @@
 # DevOps Pipeline DEPI Project
 
-This project is an automated CI/CD pipeline designed to streamline the development, testing, and deployment process. It integrates Gogs, Jenkins, Ansible, and Docker for source code management, continuous integration, and automated deployment. With each push to the repository, a Jenkins pipeline is triggered to run tests, build Docker images, and deploy the application to a production server. Ansible is used for server configuration and deployment automation, while Slack notifications provide real-time pipeline status updates.
+This project is an automated CI/CD pipeline designed to streamline the development, testing, and deployment processes. It integrates Gogs, Jenkins, Ansible, Docker, Prometheus, and Grafana for source code management, continuous integration, monitoring, and automated deployment. With each push to the repository, a Jenkins pipeline is triggered to run tests, build Docker images, and deploy the application to a production server. Ansible handles server configuration and deployment automation, while Slack notifications keep the team informed of the pipeline’s status in real time.
 
 The application itself is based on a default Vite + React + TypeScript template, generated using `bun create vite my-app --template react-swc-ts`. A `tests/` directory with a basic passing test case has been added to demonstrate the testing stage.
 
@@ -25,6 +25,7 @@ This project was developed as part of a team graduation project in the [Digital 
   > GitLab CE was considered but was too resource-heavy for a local machine with modest capabilities.
 - **Bun**: A TypeScript runtime used for package management (instead of npm), testing, and building/bundling.
 - **Docker**: The backbone of the infrastructure, used to containerize all services.
+- **Prometheus & Grafana**: Used for monitoring and visualizing metrics. Prometheus collects and stores metrics, while Grafana provides powerful dashboards to visualize them.
 
 ## Jenkins Plugins
 
