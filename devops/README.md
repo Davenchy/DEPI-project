@@ -7,7 +7,7 @@ This directory contains all the necessary files to run a local Gogs + Jenkins + 
 1. On any git push to the Gogs repository, it triggers the Jenkins pipeline through a webhook.
 2. Jenkins clones the Gogs repository, installs dependencies, runs tests, and builds the project.
 3. After the project is built, it is deployed to the production server by building a Docker image and pushing it to Docker Hub.
-4. Finally, Jenkins runs Ansible to install Docker, configure the firewall (UFW), and run the Docker image.
+4. Finally, Jenkins runs Ansible to install Docker, prometheus node exporter, configure the firewall (UFW), and run the Docker image.
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ Create directories in the `devops` directory to mount as volumes for Gogs and Je
 
 ```bash
 cd devops
-mkdir gogs jenkins_home
+mkdir gogs jenkins_home prometheus grafana
 ```
 
 Now, build and run the Docker Compose services:
@@ -28,14 +28,18 @@ Now, build and run the Docker Compose services:
 docker compose --build up
 ```
 
-This will build the Jenkins and Gogs containers from `jenkins_dockerfile` and `gogs_dockerfile`, and start them.
+This will build the Jenkins, Prometheus and Gogs containers from `jenkins_dockerfile` and `gogs_dockerfile`, and start them.
 
 Once the services are running, set up the Jenkins pipeline and credentials following the [Jenkins Setup](docs/jenkins_setup.md). Then configure your Gogs repository and push your code to it following the [Gogs Setup](docs/gogs_setup.md).
+
+Before pushing your repo to Gogs, don't forget to add your hosts to `ansible/hosts` file also `prometheus/prometheus.yml` file into the targets list.
 
 ## Ports
 
 - **Jenkins Server:** 8080
 - **Gogs:** http: 3000, ssh: 8022
+- **Prometheus:** 9090
+- **Grafana:** 3001
 
 ## Jenkins Container
 
@@ -54,6 +58,9 @@ Additionally, these packages are installed:
 - **docker-cli-buildx**: The Buildx plugin for Docker.
 - **ansible**: To be used in the pipeline.
 
+Installs the `prometheus.prometheus` Ansible collection which used to
+install the **node_exporter** on the deployment server.
+
 Finally, the `scripts/jenkins_entrypoint.sh` script is copied to the container. This script creates a Docker group with the same GID as the host and adds the Jenkins user to that group. It then starts the Jenkins entrypoint script.
 
 ## Gogs Container
@@ -71,7 +78,17 @@ The `gogs-config.ini` file is copied to configure the Gogs server. Key settings 
 - The `jenkins` host added to the `LOCAL_NETWORK_ALLOWLIST`.
 - The main config screen is disabled for the first run.
 
-Also, the `scripts/gogs_entrypoint.sh` script is copied to the container. This script will set up the Gogs server with the `gogs-config.ini` on the first run.
+Also, the `scripts/gogs_entrypoint.sh` script is copied to the container. This script will set up the Gogs server with the `gogs-config.ini` on the first run
+
+## Prometheus & Grafana Containers
+
+The Docker Compose file sets up Prometheus and Grafana containers using the `prom/prometheus` and `grafana/grafana` images.
+
+To monitor your deployment server, add its IP address to the `targets` list in the `prometheus/prometheus.yml` file.
+
+You can use Grafana to visualize the metrics collected by Prometheus.
+
+For more details, refer to the guide: [Prometheus and Grafana](docs/prometheus_grafana.md).
 
 ## Ansible
 
@@ -84,6 +101,7 @@ The playbook performs the following actions on the deployment server:
 - Updates the apt cache.
 - Installs Docker.
 - Configures and enables the firewall (UFW).
+- Installs prometheus node exporter.
 - Runs the Docker image pushed to Docker Hub.
 
 ## Jenkinsfile
