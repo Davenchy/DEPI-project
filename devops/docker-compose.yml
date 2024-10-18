@@ -22,3 +22,22 @@ services:
       - 3022:22
     volumes:
       - ./gogs:/data
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    restart: on-failure
+    user: "1000:1000"
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - ./prometheus-data/:/prometheus
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: on-failure
+    user: "1000:1000"
+    ports:
+      - 3001:3000
+    volumes:
+      - ./grafana:/var/lib/grafana
