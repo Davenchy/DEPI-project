@@ -4,12 +4,18 @@ VOLUME [ "/var/run/docker.sock" ]
 
 USER jenkins
 
+# install jenkins plugins to start ready
 RUN jenkins-plugin-cli --plugins "gogs-webhook slack ansible docker-workflow"
 
 USER root
 
+# install docker, docker-buildx plugin and ansible
 RUN apk add --no-cache docker-cli docker-cli-buildx ansible
 
+# install prometheus collection
+RUN ansible-galaxy collection install prometheus.prometheus
+
+# this script will make sure that jenkins could control your host docker
 COPY scripts/jenkins_entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chown root:jenkins /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
