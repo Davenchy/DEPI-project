@@ -1,5 +1,6 @@
 FROM gogs/gogs
 
+# use the gogs config file to set up Gogs on new containers
 COPY ./gogs-config.ini /app.ini
 COPY scripts/gogs_entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
