@@ -37,10 +37,22 @@
         proto: tcp
         comment: "Allow port 80"
 
+    - name: Add UFW rule to allow prometheus node exporter on 9100
+      ufw:
+        rule: allow
+        port: 9100
+        proto: tcp
+        comment: "Allow prometheus node exporter"
+
     - name: Validate UFW rules
       shell: ufw status
       register: ufw_status
     - debug: msg={{ ufw_status.stdout_lines }}
+
+- name: Install prometheus node exporter
+  hosts: all
+  roles:
+    - prometheus.prometheus.node_exporter
 
 - name: Deploy web app
   hosts: all
