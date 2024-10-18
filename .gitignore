@@ -27,3 +27,5 @@ dist-ssr
 devops/gitlab/
 devops/jenkins_home/
 devops/gogs/
+devops/prometheus-data/
+devops/grafana/
