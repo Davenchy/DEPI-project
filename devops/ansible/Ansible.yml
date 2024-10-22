@@ -49,11 +49,11 @@
       register: ufw_status
     - debug: msg={{ ufw_status.stdout_lines }}
 
-- name: Install prometheus node exporter
-  hosts: all
-  become: true
-  roles:
-    - prometheus.prometheus.node_exporter
+    # - name: Install prometheus node exporter
+    #   hosts: all
+    #   become: true
+    #   roles:
+    #     - prometheus.prometheus.node_exporter
 
 - name: Deploy web app
   hosts: all
