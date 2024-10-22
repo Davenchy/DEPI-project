@@ -13,8 +13,7 @@ This project was developed as part of a team graduation project in the [Digital 
 ## Resources
 
 - **Docker Image:** `davenchy/depi-project:latest`
-- **Slides:** Will be added soon.
-- **Infrastructure Representation Image:** Will be added soon.
+- **Slides:** [React App CI/CD Pipeline Slides](https://www.canva.com/design/DAGURjduqyQ/iwJD2VckKB9XEvXUlsNSyA/view?utm_content=DAGURjduqyQ&utm_campaign=designshare&utm_medium=link&utm_source=editor).
 
 ## Tools
 
